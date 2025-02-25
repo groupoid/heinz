@@ -24,10 +24,10 @@ promise as a compact, expressive framework for homotopy type theory.
 
 ## Syntax
 
-Universe: Uⁿ.
-Types: A, B ::= Sⁿ | Fibⁿ | Susp(A) | Truncⁿ(A) | ℕ | ℕ∞ | Π(x:A).B | Σ(x:A).B | Id_A(u, v)
-Terms: t, u, v ::= x | 𝟎 | suc(t) | fin(t) | inf | hopfⁿ | susp(t) | truncⁿ(t) | λx.t | t u | (t, u) | fst(t) | snd(t) | p | refl
-Contexts: Γ ::= ∅ | Γ, x:A
+* Universe: Uⁿ.
+* Types: A, B ::= Sⁿ | Fibⁿ | Susp(A) | Truncⁿ(A) | ℕ | ℕ∞ | Π(x:A).B | Σ(x:A).B | Id_A(u, v)
+* Terms: t, u, v ::= x | 𝟎 | suc(t) | fin(t) | inf | hopfⁿ | susp(t) | truncⁿ(t) | λx.t | t u | (t, u) | fst(t) | snd(t) | p | refl
+* Contexts: Γ ::= ∅ | Γ, x:A
 
 ## Formations
 
