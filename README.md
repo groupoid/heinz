@@ -7,9 +7,9 @@ We introduce Hopf Fibrations Type Theory (HFTT), a novel type system designed
 to efficiently represent and compute homotopy groups of spheres, addressing
 the computational challenges of Cubical Homotopy Type Theory (CCHM). Built
 on a minimal set of primitives—Hopf fibrations (ℝ, ℂ, ℍ, 𝕆), suspension,
-and n-truncation — HTT leverages fibrations to encode
+and n-truncation — HTFF leverages fibrations to encode
 topological structure directly. Alongside standard types (Π, Σ, Id),
-HTT includes natural numbers (ℕ) and an extended order type (ℕ∞) to
+HTFF includes natural numbers (ℕ) and an extended order type (ℕ∞) to
 access group properties. Key innovations include eliminators for
 suspensions and truncations, enabling streamlined reductions, and
 a derivable order function that extracts the order of elements in πₙ(Sᵐ),
@@ -17,10 +17,10 @@ supporting both finite (e.g., π₄(S³) ≅ ℤ/2ℤ) and infinite (e.g.,
 π₃(S²) ≅ ℤ) groups. Computational rules ensure efficient
 normalization, while the fibrations provide a basis for
 homotopy groups, potentially simplifying proofs of properties
-like π₄(S³). This article outlines HTT’s syntax, rules, and its
+like π₄(S³). This article outlines HTFF’s syntax, rules, and its
 promise as a compact, expressive framework for homotopy type theory.
 
-## Formal Definition of Hopf Type Theory (HTT)
+## Formal Definition of Hopf Fibrations Type Theory (HTFF)
 
 ## Syntax
 
