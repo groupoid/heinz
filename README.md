@@ -62,7 +62,8 @@ Id: refl : Id_A(u, u)
 Γ ⊢ C : ℕ → U, z : C(𝟎), s : Π(k:ℕ).C(k) → C(suc(k)) ⊢ rec_ℕ(C, z, s, t) : C(t) (t : ℕ)
 Γ ⊢ C : ℕ∞ → U, f : Π(k:ℕ).C(fin(k)), i : C(inf) ⊢ case_ℕ∞(C, f, i, t) : C(t) (t : ℕ∞)
 Γ ⊢ A : U, t : Susp(A), C : Susp(A) → U, s : Π(a:A).C(susp(a)) ⊢ elim_Susp(C, s, t) : C(t)
-Γ ⊢ A : U, t : Truncⁿ(A), C : Truncⁿ(A) → U, trunc : Π(a:A).C(truncⁿ(a)) ⊢ elim_Truncⁿ(C, trunc, t) : C(t)
+Γ ⊢ A : U, t : Truncⁿ(A), C : Truncⁿ(A) → U, trunc : Π(a:A).C(truncⁿ(a))
+  ⊢ elim_Truncⁿ(C, trunc, t) : C(t)
 ```
 
 ## Computations
@@ -86,7 +87,9 @@ snd(t, u) ≡ u
 πₙ(Sᵐ) ≅ Id_Suspⁿ⁻ᵐ(Fibᵏ)(hopfᵏ, hopfᵏ)    (m ≤ k, k ∈ {1, 2, 4, 8})
 pow(n)(m)(x)(k) = rec_ℕ(k’ ↦ πₙ(Sᵐ), refl, λk’.p.p · x, k)
 order : Π(n:ℕ).Π(m:ℕ).Π(x:πₙ(Sᵐ)).ℕ∞
-order(n)(m)(x) = rec_ℕ(k ↦ ℕ∞, inf, λk.prev.case(test(k), λeq.fin(suc(k)), λ_.prev), suc(k_max)) test(n)(m)(x)(k) = trunc⁰(pow(n)(m)(x)(k) = refl)
+order(n)(m)(x) = rec_ℕ(k ↦ ℕ∞, inf, λk.prev.case(test(k),
+    λeq.fin(suc(k)), λ_.prev), suc(k_max))
+    test(n)(m)(x)(k) = trunc⁰(pow(n)(m)(x)(k) = refl)
 ```
 
 ## Coherences
