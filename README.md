@@ -1,3 +1,33 @@
+# JMTT: Jack Morava Type Theory
+
+<img src="img/Jack_and_Ellen_Yoho_BC_1971.jpg"/>
+
+Encompasses unstable homotopy, stable homotopy (e.g., π₀^S(S⁰) = ℤ),
+and chromatic phenomena (e.g., H^*(RP^2), spectral sequences),
+inspired by Morava’s chromatic vision.
+
+To enable cohomology computations in Hopf Fibrations Type Theory (HFTT) using
+spectra like Hℤ or Hℚ, we need to refine and extend the spectrum-related rules.
+Cohomology in chromatic homotopy theory often involves spectra (e.g., Eilenberg-MacLane
+spectra Hℤ) and their stable homotopy groups, which represent cohomology groups when
+applied to other spectra or spaces. Our current HTT setup has spectra, stable homotopy
+groups (πₙ^S), and K(G, n) spaces trough n-Truncations and Groups, but lacks explicit
+rules for cohomology operations—pairings, cochain complexes, or spectrum maps—that
+make computations practical. Jack Morava Type Theory adds these rules, focusing on cohomology
+as H^n(X; G) = [X, K(G, n)] or, in the stable setting, π₋ₙ^S(HG ∧ X).
+
+```
+> H^*(RP^2; ℤ/2ℤ) = ℤ/2ℤ[α]/(α³)
+```
+
+## Syntax
+
+* Universe: Uⁿ.
+* Types: Fibⁿ, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v), Spec, πₙ^S(A), S⁰[p], Group, A ∧ B, [A, B], Hⁿ(X; G), G ⊗ H, SS(E, r).
+* Derivables: Sⁿ, πₙ(Sᵐ), K(G, n), Cohomology Rings, Chromatic Towers.
+* Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl, spec({Aₙ},{σₙ}), stable(t), loc_p(t), grp(G, e, op, inv), smash(t, u), map(t), tensor(g, h), t : SS(E, r)^{p,q}.
+* Contexts: Γ ::= ∅, Γ + x:A.
+
 # HFTT: Hopf Fibrations Type Theory
 
 A Minimal Framework for Homotopy Groups of Spheres.
@@ -29,34 +59,6 @@ promise as a compact, expressive framework for homotopy type theory.
 * Types: Fib, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v).
 * Derivables: Sⁿ, πₙ(Sᵐ), order function.
 * Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl.
-* Contexts: Γ ::= ∅, Γ + x:A.
-
-# JMTT: Jack Morava Type Theory
-
-Encompasses unstable homotopy, stable homotopy (e.g., π₀^S(S⁰) = ℤ),
-and chromatic phenomena (e.g., H^*(RP^2), spectral sequences),
-inspired by Morava’s chromatic vision.
-
-To enable cohomology computations in Hopf Fibrations Type Theory (HFTT) using
-spectra like Hℤ or Hℚ, we need to refine and extend the spectrum-related rules.
-Cohomology in chromatic homotopy theory often involves spectra (e.g., Eilenberg-MacLane
-spectra Hℤ) and their stable homotopy groups, which represent cohomology groups when
-applied to other spectra or spaces. Our current HTT setup has spectra, stable homotopy
-groups (πₙ^S), and K(G, n) spaces trough n-Truncations and Groups, but lacks explicit
-rules for cohomology operations—pairings, cochain complexes, or spectrum maps—that
-make computations practical. Jack Morava Type Theory adds these rules, focusing on cohomology
-as H^n(X; G) = [X, K(G, n)] or, in the stable setting, π₋ₙ^S(HG ∧ X).
-
-```
-> H^*(RP^2; ℤ/2ℤ) = ℤ/2ℤ[α]/(α³)
-```
-
-## Syntax
-
-* Universe: Uⁿ.
-* Types: Fibⁿ, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v), Spec, πₙ^S(A), S⁰[p], Group, A ∧ B, [A, B], Hⁿ(X; G), G ⊗ H, SS(E, r).
-* Derivables: Sⁿ, πₙ(Sᵐ), K(G, n), Cohomology Rings, Chromatic Towers.
-* Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl, spec({Aₙ},{σₙ}), stable(t), loc_p(t), grp(G, e, op, inv), smash(t, u), map(t), tensor(g, h), t : SS(E, r)^{p,q}.
 * Contexts: Γ ::= ∅, Γ + x:A.
   
 # Inference Rules
@@ -183,7 +185,10 @@ p · inv(p) ≡ refl    (inv(p) : Id_A(v, u) if p : Id_A(u, v))
 Γ ⊢ t : Truncⁿ(A)    Γ ⊢ u : Truncⁿ(A)    πₖ(t) ≡ πₖ(u) (k ≤ n)  ⇒  t ≡ u
 ```
 
+## Publications
+
+* <a href="https://tonpa.guru/stream/2018/2018-06-29 Хроматична Теорія Гомотопій.htm">2018-06-29 Хроматична Теорія Гомотопій</a>
+
 ## Copyright
 
 Namdak Tonpa
-
