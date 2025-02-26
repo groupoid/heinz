@@ -216,6 +216,7 @@ p · inv(p) ≡ refl    (inv(p) : Id_A(v, u) if p : Id_A(u, v))
 ## Publications
 
 * <a href="https://tonpa.guru/stream/2018/2018-06-29 Хроматична Теорія Гомотопій.htm">2018-06-29 Хроматична Теорія Гомотопій</a>
+* <a href="https://tonpa.guru/stream/2020/2020-05-03 Модельні категорії.htm">2020-05-03 Модельні категорії</a>
 
 ## Copyright
 
