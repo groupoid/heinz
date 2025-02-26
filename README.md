@@ -1,6 +1,6 @@
 # JMTT: Jack Morava Type Theory
 
-<img src="img/Jack_and_Ellen_Yoho_BC_1971.jpg"/>
+<img src="img/Jack_and_Ellen_Yoho_BC_1971.jpg" height=600/>
 
 Encompasses unstable homotopy, stable homotopy (e.g., π₀^S(S⁰) = ℤ),
 and chromatic phenomena (e.g., H^*(RP^2), spectral sequences),
