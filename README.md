@@ -73,6 +73,16 @@ as H^n(X; G) = [X, K(G, n)] or, in the stable setting, π₋ₙ^S(HG ∧ X).
 Γ ⊢ Π(x:A).B : U
 Γ ⊢ Σ(x:A).B : U
 Γ ⊢ Id_A(u, v) : U
+
+Γ ⊢ Spec : U
+Γ ⊢ πₙ^S(A) : U
+Γ ⊢ A ∧ B : Spec
+Γ ⊢ [A, B] : Spec
+Γ ⊢ Hⁿ(X; G) : U
+Γ ⊢ G ⊗ H : Group
+Γ ⊢ SS(E, r) : U
+Γ ⊢ Group : U
+Γ ⊢ S⁰[p] : Spec
 ```
 
 ## Introductions
@@ -86,8 +96,15 @@ Truncⁿ: truncⁿ(t) : Truncⁿ(A) if t : A
 Π: λx.t : Π(x:A).B if Γ, x:A ⊢ t : B
 Σ: (t, u) : Σ(x:A).B if t : A, u : B[t/x]
 Id: refl : Id_A(u, u)
-t : SS(E, r)^{p,q}
-tensor(g, h) : G ⊗ H
+
+Spec: spec({Aₙ},{σₙ}) : Spec)
+πₙ^S(A): stable(t) : πₙ^S(A)
+S⁰[p]: loc_p(t) : S⁰[p]
+Group: grp(G, e, op, inv)
+∧: smash(t, u)
+SS: t(E,r,p,q)
+[,]: map(t)
+⊗: tensor(g, h) : G ⊗ H
 ```
 
 ## Eliminators
@@ -97,6 +114,7 @@ tensor(g, h) : G ⊗ H
 Γ ⊢ C : ℕ∞ → U, f : Π(k:ℕ).C(fin(k)), i : C(inf) ⊢ case_ℕ∞(C, f, i, t) : C(t) (t : ℕ∞)
 Γ ⊢ A : U, t : Susp(A), C : Susp(A) → U, s : Π(a:A).C(susp(a)) ⊢ elim_Susp(C, s, t) : C(t)
 Γ ⊢ A : U, t : Truncⁿ(A), C : Truncⁿ(A) → U, trunc : Π(a:A).C(truncⁿ(a)) ⊢ elim_Truncⁿ(C, trunc, t) : C(t)
+
 Γ ⊢ t : A ∧ B, C : (A ∧ B) → U, s : Π(a:A).Π(b:B).C(smash(a, b)) Γ ⊢ elim_Smash(C, s, t) : C(t)
 Γ ⊢ t : [A, B], C : [A, B] → U, m : Π(f:A→B).C(map(f)) Γ ⊢ elim_Map(C, m, t) : C(t)
 Γ ⊢ E : Spec, C : Spec → U, : Π({Aₙ}:ℕ→U).Π({σₙ}:Π(n:ℕ).Aₙ→Susp(Aₙ₊₁)).C(spec({Aₙ},{σₙ})) ⊢ elim_Spec(C, s, E) : C(E)
@@ -131,7 +149,6 @@ pow(n)(m)(x)(k) = rec_ℕ(k’ ↦ πₙ(Sᵐ), refl, λk’.p.p · x, k)
 (p · q) · r ≡ p · (q · r), p · refl ≡ p, refl · p ≡ p, p · inv(p) ≡ refl
 
 elim_Spec(C, s, spec({Aₙ},{σₙ})) ≡ s({Aₙ},{σₙ})
-
 cup(map(f), map(g)) ↦ map(λx.kgn(tensor(f(x), g(x)), n+m))
 cup(t, u) associative, graded-commutative
 diffᵣ(diffᵣ(t)) ≡ 0    (d² = 0)
