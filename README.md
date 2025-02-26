@@ -29,7 +29,7 @@ promise as a compact, expressive framework for homotopy type theory.
 * Types: Fib, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v).
 * Derivables: Sⁿ, πₙ(Sᵐ), order function.
 * Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl.
-* Contexts: Γ ::= ∅, Γ + x:A.
+* Contexts: Γ ::= ∅ `|` Γ, x:A.
 
 # JMTT: Jack Morava Type Theory
 
@@ -57,7 +57,7 @@ as H^n(X; G) = [X, K(G, n)] or, in the stable setting, π₋ₙ^S(HG ∧ X).
 * Types: Fibⁿ, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v), Spec, πₙ^S(A), S⁰[p], Group, A ∧ B, [A, B], Hⁿ(X; G), G ⊗ H, SS(E, r).
 * Derivables: Sⁿ, πₙ(Sᵐ), K(G, n), Cohomology Rings, Chromatic Towers.
 * Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl, spec({Aₙ},{σₙ}), stable(t), loc_p(t), grp(G, e, op, inv), smash(t, u), map(t), tensor(g, h), t : SS(E, r)^{p,q}.
-* Contexts: Γ ::= ∅, Γ + x:A.
+* Contexts: Γ ::= ∅ `|` Γ, x:A.
   
 # Inference Rules
 
