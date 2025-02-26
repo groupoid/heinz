@@ -96,9 +96,7 @@ tensor(g, h) : G ⊗ H
 Γ ⊢ C : ℕ → U, z : C(𝟎), s : Π(k:ℕ).C(k) → C(suc(k)) ⊢ rec_ℕ(C, z, s, t) : C(t) (t : ℕ)
 Γ ⊢ C : ℕ∞ → U, f : Π(k:ℕ).C(fin(k)), i : C(inf) ⊢ case_ℕ∞(C, f, i, t) : C(t) (t : ℕ∞)
 Γ ⊢ A : U, t : Susp(A), C : Susp(A) → U, s : Π(a:A).C(susp(a)) ⊢ elim_Susp(C, s, t) : C(t)
-Γ ⊢ A : U, t : Truncⁿ(A), C : Truncⁿ(A) → U, trunc : Π(a:A).C(truncⁿ(a))
-  ⊢ elim_Truncⁿ(C, trunc, t) : C(t)
-
+Γ ⊢ A : U, t : Truncⁿ(A), C : Truncⁿ(A) → U, trunc : Π(a:A).C(truncⁿ(a)) ⊢ elim_Truncⁿ(C, trunc, t) : C(t)
 Γ ⊢ t : A ∧ B, C : (A ∧ B) → U, s : Π(a:A).Π(b:B).C(smash(a, b)) Γ ⊢ elim_Smash(C, s, t) : C(t)
 Γ ⊢ t : [A, B], C : [A, B] → U, m : Π(f:A→B).C(map(f)) Γ ⊢ elim_Map(C, m, t) : C(t)
 Γ ⊢ E : Spec, C : Spec → U, : Π({Aₙ}:ℕ→U).Π({σₙ}:Π(n:ℕ).Aₙ→Susp(Aₙ₊₁)).C(spec({Aₙ},{σₙ})) ⊢ elim_Spec(C, s, E) : C(E)
