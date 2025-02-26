@@ -1,5 +1,4 @@
-Hopf Fibrations Type Theory
-===========================
+# HFTT: Hopf Fibrations Type Theory
 
 A Minimal Framework for Homotopy Groups of Spheres.
 
@@ -20,14 +19,47 @@ homotopy groups, potentially simplifying proofs of properties
 like π₄(S³). This article outlines HFTT’s syntax, rules, and its
 promise as a compact, expressive framework for homotopy type theory.
 
-## Formal Definition of Hopf Fibrations Type Theory (HFTT)
+```
+> π₃(S²) = ℤ
+```
 
 ## Syntax
 
 * Universe: Uⁿ.
-* Types: A, B ::= Sⁿ, Fib, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v).
+* Types: Fib, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v).
+* Derivables: Sⁿ, πₙ(Sᵐ), order function.
 * Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl.
 * Contexts: Γ ::= ∅, Γ + x:A.
+
+# JMTT: Jack Morava Type Theory
+
+Encompasses unstable homotopy, stable homotopy (e.g., π₀^S(S⁰) = ℤ),
+and chromatic phenomena (e.g., H^*(RP^2), spectral sequences),
+inspired by Morava’s chromatic vision.
+
+To enable cohomology computations in Hopf Fibrations Type Theory (HFTT) using
+spectra like Hℤ or Hℚ, we need to refine and extend the spectrum-related rules.
+Cohomology in chromatic homotopy theory often involves spectra (e.g., Eilenberg-MacLane
+spectra Hℤ) and their stable homotopy groups, which represent cohomology groups when
+applied to other spectra or spaces. Our current HTT setup has spectra, stable homotopy
+groups (πₙ^S), and K(G, n) spaces trough n-Truncations and Groups, but lacks explicit
+rules for cohomology operations—pairings, cochain complexes, or spectrum maps—that
+make computations practical. Jack Morava Type Theory adds these rules, focusing on cohomology
+as H^n(X; G) = [X, K(G, n)] or, in the stable setting, π₋ₙ^S(HG ∧ X).
+
+```
+> H^*(RP^2; ℤ/2ℤ) = ℤ/2ℤ[α]/(α³)
+```
+
+## Syntax
+
+* Universe: Uⁿ.
+* Types: Fibⁿ, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v), Spec, πₙ^S(A), S⁰[p], Group, A ∧ B, [A, B], Hⁿ(X; G), G ⊗ H, SS(E, r).
+* Derivables: Sⁿ, πₙ(Sᵐ), K(G, n), Cohomology Rings, Chromatic Towers.
+* Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl, spec({Aₙ},{σₙ}), stable(t), loc_p(t), grp(G, e, op, inv), smash(t, u), map(t), tensor(g, h), t : SS(E, r)^{p,q}.
+* Contexts: Γ ::= ∅, Γ + x:A.
+  
+# Inference Rules
 
 ## Formations
 
@@ -54,6 +86,8 @@ Truncⁿ: truncⁿ(t) : Truncⁿ(A) if t : A
 Π: λx.t : Π(x:A).B if Γ, x:A ⊢ t : B
 Σ: (t, u) : Σ(x:A).B if t : A, u : B[t/x]
 Id: refl : Id_A(u, u)
+t : SS(E, r)^{p,q}
+tensor(g, h) : G ⊗ H
 ```
 
 ## Eliminators
@@ -64,6 +98,16 @@ Id: refl : Id_A(u, u)
 Γ ⊢ A : U, t : Susp(A), C : Susp(A) → U, s : Π(a:A).C(susp(a)) ⊢ elim_Susp(C, s, t) : C(t)
 Γ ⊢ A : U, t : Truncⁿ(A), C : Truncⁿ(A) → U, trunc : Π(a:A).C(truncⁿ(a))
   ⊢ elim_Truncⁿ(C, trunc, t) : C(t)
+
+Γ ⊢ t : A ∧ B, C : (A ∧ B) → U, s : Π(a:A).Π(b:B).C(smash(a, b)) Γ ⊢ elim_Smash(C, s, t) : C(t)
+Γ ⊢ t : [A, B], C : [A, B] → U, m : Π(f:A→B).C(map(f)) Γ ⊢ elim_Map(C, m, t) : C(t)
+Γ ⊢ E : Spec, C : Spec → U, : Π({Aₙ}:ℕ→U).Π({σₙ}:Π(n:ℕ).Aₙ→Susp(Aₙ₊₁)).C(spec({Aₙ},{σₙ})) ⊢ elim_Spec(C, s, E) : C(E)
+Γ ⊢ A : Spec, t : πₙ^S(A), C : πₙ^S(A) → U, s : Π(k:ℕ).Π(a:πₙ₊ₖ(Aₖ)).C(stable(a)) ⊢ elim_πₙ^S(C, s, t) : C(t)
+
+order : Π(n:ℕ).Π(m:ℕ).Π(x:πₙ(Sᵐ)).ℕ∞
+order(n)(m)(x) = rec_ℕ(k ↦ ℕ∞, inf, λk.prev.case(test(k),
+    λeq.fin(suc(k)), λ_.prev), suc(k_max))
+    test(n)(m)(x)(k) = trunc⁰(pow(n)(m)(x)(k) = refl)
 ```
 
 ## Computations
@@ -86,10 +130,27 @@ fst(t, u) ≡ t
 snd(t, u) ≡ u
 πₙ(Sᵐ) ≅ Id_Suspⁿ⁻ᵐ(Fibᵏ)(hopfᵏ, hopfᵏ)    (m ≤ k, k ∈ {1, 2, 4, 8})
 pow(n)(m)(x)(k) = rec_ℕ(k’ ↦ πₙ(Sᵐ), refl, λk’.p.p · x, k)
-order : Π(n:ℕ).Π(m:ℕ).Π(x:πₙ(Sᵐ)).ℕ∞
-order(n)(m)(x) = rec_ℕ(k ↦ ℕ∞, inf, λk.prev.case(test(k),
-    λeq.fin(suc(k)), λ_.prev), suc(k_max))
-    test(n)(m)(x)(k) = trunc⁰(pow(n)(m)(x)(k) = refl)
+(p · q) · r ≡ p · (q · r), p · refl ≡ p, refl · p ≡ p, p · inv(p) ≡ refl
+
+elim_Spec(C, s, spec({Aₙ},{σₙ})) ≡ s({Aₙ},{σₙ})
+
+cup(map(f), map(g)) ↦ map(λx.kgn(tensor(f(x), g(x)), n+m))
+cup(t, u) associative, graded-commutative
+diffᵣ(diffᵣ(t)) ≡ 0    (d² = 0)
+SS(E, r+1) ≅ ker(diffᵣ) / im(diffᵣ)    (next page)
+diffᵣ(diffᵣ(t)) ≡ 0, SS(E, r+1) ≅ ker(diffᵣ) / im(diffᵣ)
+Hⁿ(X; G) ≅ π₀^S([X, K(G, n)]), Hⁿ(X; G) ≅ π₋ₙ^S(HG ∧ X)
+Hⁿ(X; G) ≅ π₀^S([X, K(G, n)]), Hⁿ(X; G) ≅ π₋ₙ^S(HG ∧ X)    (stable equivalence)
+HG ∧ S⁰ ≡ HG
+elim_Map(C, m, map(f)) ≡ m(f), πₙ^S([X, Y]) ≅ [Suspⁿ(X), Y]₀   (adjointness)
+[spec({Aₙ},{σₙ}), spec({Bₙ},{τₙ})]ₖ ≡ [Aₖ, Bₖ]    (component-wise)
+elim_Smash(C, s, smash(a, b)) ≡ s(a, b), S⁰ ∧ X ≡ X
+(spec({Aₙ},{σₙ})) ∧ (spec({Bₙ},{τₙ})) ≡ spec({Aₙ ∧ Bₙ},{σₙ ∧ τₙ})
+πₙ(K(G, n)) ≅ G, susp(kgn(g, n)) ↦ kgn(g, n+1)
+loc_p(spec({Aₙ},{σₙ})) ↦ spec({Aₙ[p]},{σₙ[p]})
+πₙ^S(A) ≡ colimₖ πₙ₊ₖ(Aₖ), stable(aₖ) ↦ colimₖ(aₖ)
+elim_Spec(C, s, spec({Aₙ},{σₙ})) ≡ s({Aₙ},{σₙ})
+πₙ^S(A ∧ B) ≅ colimₖ πₙ₊ₖ(Aₖ ∧ Bₖ) - stable Homotopy Refinement
 ```
 
 ## Coherences
