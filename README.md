@@ -98,8 +98,16 @@ Truncⁿ: truncⁿ(t) : Truncⁿ(A) if t : A
 Σ: (t, u) : Σ(x:A).B if t : A, u : B[t/x]
 Id: refl : Id_A(u, u)
 Γ ⊢ t : HopfFibⁿ  ⇒  t ≡ hopfⁿ
-fiber : HopfFibⁿ → U (fiber(HopfFib¹) = S⁰, fiber(HopfFib²) = S¹, fiber(HopfFib⁴) = S³, fiber(HopfFib⁸) = S⁷)
-total : HopfFibⁿ → U (total(HopfFib¹) = S¹, total(HopfFib²) = S³, total(HopfFib⁴) = S⁷, total(HopfFib⁸) = S¹⁵)
+fiber : HopfFibⁿ → U
+fiber(HopfFib¹) = S⁰
+fiber(HopfFib²) = S¹
+fiber(HopfFib⁴) = S³
+fiber(HopfFib⁸) = S⁷
+total : HopfFibⁿ → U
+total(HopfFib¹) = S¹
+total(HopfFib²) = S³
+total(HopfFib⁴) = S⁷
+total(HopfFib⁸) = S¹⁵
 fibration : Π(f:HopfFibⁿ).fiber(f) → total(f)
 lift : Π(a:Sᵐ).Π(b:Sᵐ).Id_Fibⁿ(hopfⁿ, hopfⁿ) → Id_Sᵐ(a, b)
 inv : Id_A(u, v) → Id_A(v, u)
