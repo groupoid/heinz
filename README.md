@@ -56,7 +56,7 @@ promise as a compact, expressive framework for homotopy type theory.
 ## Syntax
 
 * Universe: Uⁿ.
-* Types: Fib, Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v).
+* Types: HopfFibⁿ (n=1,2,4,8), Susp(A), Truncⁿ(A), ℕ, ℕ∞, Π(x:A).B, Σ(x:A).B, Id_A(u, v).
 * Derivables: Sⁿ, πₙ(Sᵐ), order function.
 * Terms: t, u, v ::= x, 𝟎, suc(t), fin(t), inf, hopfⁿ, susp(t), truncⁿ(t), λx.t, t u, (t, u), fst(t), snd(t), p, refl.
 * Contexts: Γ ::= ∅ `|` Γ, x:A.
@@ -67,7 +67,7 @@ promise as a compact, expressive framework for homotopy type theory.
 
 ```
 Γ ⊢ Sⁿ : U := ℕ-iter U 𝟐 Susp
-Γ ⊢ Fibⁿ : U (n ∈ {1, 2, 4, 8})
+Γ ⊢ HopfFibⁿ : U (n ∈ {1, 2, 4, 8})
 Γ ⊢ Susp(A) : U
 Γ ⊢ Truncⁿ(A) : U
 Γ ⊢ ℕ : U
@@ -92,21 +92,28 @@ promise as a compact, expressive framework for homotopy type theory.
 ```
 ℕ: 𝟎 : ℕ, suc : ℕ → ℕ
 ℕ∞: fin : ℕ → ℕ∞, inf : ℕ∞
-Fibⁿ: hopfⁿ : Fibⁿ
 Susp: susp(t) : Susp(A) if t : A
 Truncⁿ: truncⁿ(t) : Truncⁿ(A) if t : A
 Π: λx.t : Π(x:A).B if Γ, x:A ⊢ t : B
 Σ: (t, u) : Σ(x:A).B if t : A, u : B[t/x]
 Id: refl : Id_A(u, u)
-
-Spec: spec({Aₙ},{σₙ}) : Spec)
-πₙ^S(A): stable(t) : πₙ^S(A)
-S⁰[p]: loc_p(t) : S⁰[p]
-Group: grp(G, e, op, inv)
-∧: smash(t, u)
-SS: t(E,r,p,q)
-[,]: map(t)
-⊗: tensor(g, h) : G ⊗ H
+Γ ⊢ t : HopfFibⁿ  ⇒  t ≡ hopfⁿ
+fiber : HopfFibⁿ → U (fiber(HopfFib¹) = S⁰, fiber(HopfFib²) = S¹, fiber(HopfFib⁴) = S³, fiber(HopfFib⁸) = S⁷)
+total : HopfFibⁿ → U (total(HopfFib¹) = S¹, total(HopfFib²) = S³, total(HopfFib⁴) = S⁷, total(HopfFib⁸) = S¹⁵)
+fibration : Π(f:HopfFibⁿ).fiber(f) → total(f)
+lift : Π(a:Sᵐ).Π(b:Sᵐ).Id_Fibⁿ(hopfⁿ, hopfⁿ) → Id_Sᵐ(a, b)
+inv : Id_A(u, v) → Id_A(v, u)
+proj : HopfFibⁿ → Sᵐ, (m = n/2, e.g., HopfFib² → S²)
+Spec : U, Aₙ : ℕ → U, σₙ : Aₙ → Susp(Aₙ₊₁) ⊢ spec({Aₙ}, {σₙ}) : Spec
+S⁰ : Spec, S⁰ := spec({Sⁿ}, {σₙ}) ⊢ σₙ : Sⁿ → Susp(Sⁿ₊₁) ≡ Sⁿ⁺¹
+Γ ⊢ A : Spec, a : A₀ ⊢ πₙ^S(A) : U := colimₖ πₙ₊ₖ(Aₖ)
+stable(t) : πₙ^S(A)
+A : Spec, p : ℕ (prime), S⁰[p] : Spec ⊢ loc_p(t) : S⁰[p]
+grp(G, e, op, inv) : Group
+smash(t, u) : ∧
+t(E,r,p,q) : SS
+map(t) : [,]
+tensor(g, h) : G ⊗ H 
 ```
 
 ## Eliminators
@@ -137,19 +144,32 @@ case_ℕ∞(C, f, i, fin(k)) ≡ f(k)
 case_ℕ∞(C, f, i, inf) ≡ i
 elim_Susp(C, s, susp(a)) ≡ s(a)
 Susp(Sⁿ) ≡ Sⁿ⁺¹
+susp(HopfFibⁿ) ↦ HopfFibⁿ⁺¹, (n ∈ {1, 2, 4}, n+1 ≤ 8)
+susp(truncⁿ(a)) ↦ truncⁿ⁺¹(susp(a))
+Susp(HopfFib⁸) ≡ Susp(total(HopfFib⁸))    (fallback to S¹⁶)
+Susp(Truncⁿ(A)) ↦ Truncⁿ⁺¹(Susp(A))    (term-level coherence)
 elim_Truncⁿ(C, trunc, truncⁿ(a)) ≡ trunc(a)
 πₖ(Truncⁿ(A)) ≡ 𝟎    (k > n)
-Fib¹ ≡ S⁰ → S¹
-Fib² ≡ S¹ → S³ → S²
-Fib⁴ ≡ S³ → S⁷ → S⁴
-Fib⁸ ≡ S⁷ → S¹⁵ → S⁸
+HopfFib¹ ≡ S⁰ → S¹
+HopfFib² ≡ S¹ → S³ → S²
+HopfFib⁴ ≡ S³ → S⁷ → S⁴
+HopfFib⁸ ≡ S⁷ → S¹⁵ → S⁸
+fibration(HopfFibⁿ) : fiber(HopfFibⁿ) → total(HopfFibⁿ)
+proj(fibration(HopfFibⁿ)(x)) ≡ baseᵐ
+lift(baseᵐ, baseᵐ, refl) ≡ refl
+lift(a, b, p) · q ≡ lift(a, c, p · q)    (path composition)
+πₙ(Sᵐ) ≅ Id_total(HopfFibᵏ)(fibration(hopfᵏ)(x), fibration(hopfᵏ)(y))    (adjusted definition)
 (λx.t) u ≡ t[u/x]
 fst(t, u) ≡ t
 snd(t, u) ≡ u
-πₙ(Sᵐ) ≅ Id_Suspⁿ⁻ᵐ(Fibᵏ)(hopfᵏ, hopfᵏ)    (m ≤ k, k ∈ {1, 2, 4, 8})
+πₙ(Sᵐ) ≅ Id_Suspⁿ⁻ᵐ(HopfFibᵏ)(hopfᵏ, hopfᵏ)    (m ≤ k, k ∈ {1, 2, 4, 8})
 pow(n)(m)(x)(k) = rec_ℕ(k’ ↦ πₙ(Sᵐ), refl, λk’.p.p · x, k)
 (p · q) · r ≡ p · (q · r), p · refl ≡ p, refl · p ≡ p, p · inv(p) ≡ refl
+proj(hopfⁿ) ≡ baseᵐ    (fixed point in Sᵐ)
+lift(a, b, p) · q ≡ lift(a, c, p · q)    (path composition)
 
+πₙ^S(S⁰) ≡ colimₖ πₙ₊ₖ(Sᵏ)
+stable(aₖ) ↦ colimₖ(aₖ)    (aₖ : πₙ₊ₖ(Aₖ))
 elim_Spec(C, s, spec({Aₙ},{σₙ})) ≡ s({Aₙ},{σₙ})
 cup(map(f), map(g)) ↦ map(λx.kgn(tensor(f(x), g(x)), n+m))
 cup(t, u) associative, graded-commutative
@@ -166,22 +186,20 @@ elim_Smash(C, s, smash(a, b)) ≡ s(a, b), S⁰ ∧ X ≡ X
 πₙ(K(G, n)) ≅ G, susp(kgn(g, n)) ↦ kgn(g, n+1)
 loc_p(spec({Aₙ},{σₙ})) ↦ spec({Aₙ[p]},{σₙ[p]})
 πₙ^S(A) ≡ colimₖ πₙ₊ₖ(Aₖ), stable(aₖ) ↦ colimₖ(aₖ)
+πₙ^S(S⁰[p]) ≡ πₙ^S(S⁰) ⊗ ℤ_{(p)}    (p-local integers)
 elim_Spec(C, s, spec({Aₙ},{σₙ})) ≡ s({Aₙ},{σₙ})
 πₙ^S(A ∧ B) ≅ colimₖ πₙ₊ₖ(Aₖ ∧ Bₖ) - stable Homotopy Refinement
+Γ ⊢ finite : Π(n:ℕ).Π(m:ℕ).Trunc⁰(πₙ(Sᵐ)) → U, finite(n)(m)(trunc⁰(x)) = Σ(k:ℕ).Id_πₙ(Sᵐ)(pow(n)(m)(x)(k), refl)
 ```
 
 ## Coherences
 
 ```
-susp(hopfⁿ) ↦ hopfⁿ⁺¹, (n ∈ {1, 2, 4}, n+1 ≤ 8)
-susp(truncⁿ(a)) ↦ truncⁿ⁺¹(susp(a))
-proj : Fibⁿ → Sᵐ, (m = n/2, e.g., Fib² → S²)
-lift : Π(a:Sᵐ).Π(b:Sᵐ).Id_Fibⁿ(hopfⁿ, hopfⁿ) → Id_Sᵐ(a, b)
 (p · q) · r ≡ p · (q · r)
 p · refl ≡ p    refl · p ≡ p
 p · inv(p) ≡ refl    (inv(p) : Id_A(v, u) if p : Id_A(u, v))
 Γ ⊢ t : Trunc⁰(A), u : Trunc⁰(A) ⊢ t ≡ u : Trunc⁰(A) or  Γ ⊢ t ≠ u : Trunc⁰(A)
-Γ ⊢ t : Fibⁿ  ⇒  t ≡ hopfⁿ
+Γ ⊢ t : HopfFibⁿ  ⇒  t ≡ hopfⁿ
 Γ ⊢ t : Truncⁿ(A)    Γ ⊢ u : Truncⁿ(A)    πₖ(t) ≡ πₖ(u) (k ≤ n)  ⇒  t ≡ u
 ```
 
